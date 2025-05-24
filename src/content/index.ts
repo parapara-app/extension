@@ -1,1 +1,3 @@
-console.log("Parapara content script injected!");
+import { registerDblclickHandler } from "@/content/handlers/dblclick";
+
+registerDblclickHandler();

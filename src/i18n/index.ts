@@ -2,7 +2,7 @@ import en from "@/i18n/locales/en.json";
 import ja from "@/i18n/locales/ja.json";
 import ko from "@/i18n/locales/ko.json";
 
-type LocaleKeys = keyof typeof ko;
+type LocaleKeys = keyof typeof en;
 type LocaleMessages = Record<LocaleKeys, string>;
 
 const locales: Record<string, LocaleMessages> = { en, ja, ko };

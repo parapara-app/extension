@@ -1,8 +1,8 @@
 import { translate } from "@/i18n";
 
-export const registerFullPageTranslateMenu = () => {
+export const registerPageTranslateMenu = () => {
   chrome.contextMenus.create({
-    id: "para-translate-page",
+    id: "translate-page",
     title: translate("translate_page"),
     contexts: ["page"],
   });

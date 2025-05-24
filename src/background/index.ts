@@ -1,16 +1,19 @@
 import { registerContextMenus } from "@/background/contextMenu";
 import { handleFullPageTranslate } from "@/background/translate/onClick";
-import { handleSelectionTranslate } from "@/background/selection-translate/onClick";
 
 chrome.runtime.onInstalled.addListener(() => {
   registerContextMenus();
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === "para-translate-selection") {
-    handleSelectionTranslate(info);
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === "DOUBLE_CLICK_TEXT") {
+    const selectedWord = message.payload;
+    console.log("더블클릭된 단어:", selectedWord);
   }
-  if (info.menuItemId === "para-translate-page") {
+});
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "translate-page") {
     handleFullPageTranslate(tab);
   }
 });
