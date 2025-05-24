@@ -1,0 +1,37 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+.vite/
+*.local
+*.cache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# TypeScript
+*.tsbuildinfo
+
+# Chrome Extension specific
+# - If you ever store secrets or OAuth tokens locally
+secrets.json
+.env
+.env.* # env for Vite (e.g. .env.development)
+
+# Optional: Test coverage or temp
+coverage/
+temp/
