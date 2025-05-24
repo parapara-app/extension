@@ -5,25 +5,31 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "watch": "vite build --watch"
+    "build": "npm run build:css && npm run build:content && vite build",
+    "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./public/tailwind.css --minify",
+    "watch:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./public/tailwind.css --watch",
+    "build:content": "vite build --config vite.config.content.ts",
+    "watch:content": "vite build --config vite.config.content.ts --watch",
+    "watch": "concurrently \"npm:watch:css\" \"npm:watch:content\" \"vite build --watch\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@crxjs/vite-plugin": "^2.0.0-beta.33",
     "@types/chrome": "^0.0.323",
     "@types/node": "^22.15.21",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^4.5.0",
     "typescript": "^5.8.3",
-    "vite": "^4.5.14"
+    "vite": "^6.3.5"
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.7",
+    "@tailwindcss/vite": "^4.1.7",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.7"
   }
 }
