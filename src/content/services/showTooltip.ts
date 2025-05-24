@@ -1,4 +1,5 @@
-import { calculateTooltipPosition } from "@/lib/caculateTooltipPosition";
+import { Tooltip } from "@/components/Tooltip";
+import { calculateTooltipPosition, getSelectionBoundingRects } from "@/lib/caculateTooltipPosition";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
@@ -15,30 +16,29 @@ export const showTooltip = (
   container.style.top = `${position.y}px`;
   container.style.left = `${position.x}px`;
   container.style.zIndex = "999999";
-  container.style.visibility = "hidden"; 
+  container.style.visibility = "hidden";
 
   document.body.appendChild(container);
 
-  import("@/components/Tooltip").then(({ Tooltip }) => {
-    const root = createRoot(container);
-    root.render(React.createElement(Tooltip, { word, meanings }));
+  const root = createRoot(container);
+  root.render(React.createElement(Tooltip, { word, meanings }));
 
-    requestAnimationFrame(() => {
-      const tooltipRect = container.getBoundingClientRect();
-      const { width, height } = tooltipRect;
+  requestAnimationFrame(() => {
+    const tooltipRect = container.getBoundingClientRect();
+    const { width, height } = tooltipRect;
 
-      const pos = calculateTooltipPosition(position.x, position.y, width, height);
+    const rects = getSelectionBoundingRects();
+    const pos = calculateTooltipPosition(rects, width, height);
 
-      container.style.left = `${pos.left}px`;
-      container.style.top = `${pos.top}px`;
-      container.style.visibility = "visible";
-    });
-
-    const handleOutsideClick = createOutsideClickHandler(container);
-    setTimeout(() => {
-      document.addEventListener("click", handleOutsideClick);
-    }, 0);
+    container.style.left = `${pos.left}px`;
+    container.style.top = `${pos.top}px`;
+    container.style.visibility = "visible";
   });
+
+  const handleOutsideClick = createOutsideClickHandler(container);
+  setTimeout(() => {
+    document.addEventListener("click", handleOutsideClick);
+  }, 0);
 };
 
 const removeExistingTooltip = () => {

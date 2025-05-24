@@ -9,11 +9,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "DOUBLE_CLICK_TEXT") {
     const { word, position } = message.payload;
 
-    const meanings = [
-      "1. meaning",
-      "2. meaning",
-      "3. meaning",
-    ];
+    const meanings = ["This feature is currently under development"];
 
     chrome.tabs.sendMessage(sender.tab!.id!, {
       type: "SHOW_TOOLTIP",
