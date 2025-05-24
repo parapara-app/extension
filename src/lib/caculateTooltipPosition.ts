@@ -48,10 +48,13 @@ export const getSelectionBoundingRects = () => {
   const range = selection.getRangeAt(0);
   const rect = range.getBoundingClientRect();
 
+  const scrollX = window.scrollX || window.pageXOffset;
+  const scrollY = window.scrollY || window.pageYOffset;
+
   return {
-    topRight: { x: rect.right, y: rect.top },
-    bottomRight: { x: rect.right, y: rect.bottom },
-    bottomLeft: { x: rect.left, y: rect.bottom },
-    topLeft: { x: rect.left, y: rect.top },
+    topRight: { x: rect.right + scrollX, y: rect.top + scrollY },
+    bottomRight: { x: rect.right + scrollX, y: rect.bottom + scrollY },
+    bottomLeft: { x: rect.left + scrollX, y: rect.bottom + scrollY },
+    topLeft: { x: rect.left + scrollX, y: rect.top + scrollY },
   };
 };

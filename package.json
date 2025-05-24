@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "npm run build:css && npm run build:content && vite build",
     "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./public/tailwind.css --minify",
-    "watch:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./public/tailwind.css --watch",
     "build:content": "vite build --config vite.config.content.ts",
+    "watch:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./public/tailwind.css --watch",
     "watch:content": "vite build --config vite.config.content.ts --watch",
     "watch": "concurrently \"npm:watch:css\" \"npm:watch:content\" \"vite build --watch\""
   },
