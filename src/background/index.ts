@@ -1,5 +1,6 @@
 import { registerContextMenus } from "@/background/contextMenu";
 import { handleFullPageTranslate } from "@/background/translate/onClick";
+import { registerPageTranslateMenu, tabTranslateState } from "@/background/translate/registerMenu";
 
 chrome.runtime.onInstalled.addListener(() => {
   registerContextMenus();
@@ -37,7 +38,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (!tab?.id) return;
+  const state = tabTranslateState.get(tab.id) || "original";
   if (info.menuItemId === "translate-page") {
-    handleFullPageTranslate(tab);
+    if (state === "original") {
+      // Start Translation
+      chrome.tabs.sendMessage(tab.id, { type: "REQUEST_PAGE_TEXT" });
+      registerPageTranslateMenu(tab.id, true);
+    } else {
+      // Cancel Translation
+      chrome.tabs.sendMessage(tab.id, { type: "CANCEL_TRANSLATION" });
+      registerPageTranslateMenu(tab.id, false);
+    }
   }
 });
