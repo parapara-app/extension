@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     // 번역 처리
     const replaced = Array.isArray(message.text)
-      ? message.text.map(() => "■■■■■■")
+      ? message.text.map(() => "Replaced Text")
       : [];
 
     if (sender.tab && sender.tab.id) {
@@ -61,5 +61,12 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       chrome.tabs.sendMessage(tab.id, { type: "CANCEL_TRANSLATION" });
       registerPageTranslateMenu(tab.id, false);
     }
+  }
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.url || changeInfo.status === "loading") {
+    tabTranslateState.set(tabId, "original");
+    registerPageTranslateMenu(tabId, false);
   }
 });

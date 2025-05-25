@@ -57,7 +57,6 @@ export function extractParagraphsFromPage(): string[] {
     let parent: Element | null = el;
     while (parent) {
       if (parent instanceof Element && isIgnorableElement(parent)) {
-        console.log("IGNORED:", parent);
         skip = true;
         break;
       }
