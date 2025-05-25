@@ -1,4 +1,4 @@
-import { Tooltip } from "@/components/Tooltip";
+import { Tooltip } from "@/content/components/Tooltip";
 import { calculateTooltipPosition, getSelectionBoundingRects } from "@/lib/caculateTooltipPosition";
 import React from "react";
 import { createRoot } from "react-dom/client";
