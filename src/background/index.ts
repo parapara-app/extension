@@ -19,17 +19,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
   }
 
-  if (message.type === "PAGE_TEXT_RESULT") {
-    // 번역/가공 (지금은 예시로 prefix만)
-    const translated = `[번역결과] ${message.text.slice(0, 100)}...`;
-    // 번역된 텍스트를 해당 탭 content script에 다시 보냄
-    if (message.tabId) {
-      chrome.tabs.sendMessage(message.tabId, {
-        type: "REPLACE_PAGE_TEXT",
-        text: translated,
-      });
-    }
+  if (message.type === "RESULT_PAGE_TEXT") {
+    console.log("[RESULT_PAGE_TEXT] ", message.text);
+
+    // 번역 처리 
+    const translated = `${message.text}`;
+
+    // content script로 다시 결과 전달
+    // if (sender.tab && sender.tab.id) {
+    //   chrome.tabs.sendMessage(sender.tab.id, {
+    //     type: "REPLACE_PAGE_TEXT",
+    //     text: translated,
+    //   });
+    // }
   }
+
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
