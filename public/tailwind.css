@@ -223,6 +223,9 @@
   .inline-block {
     display: inline-block;
   }
+  .table {
+    display: table;
+  }
   .min-h-\[260px\] {
     min-height: 260px;
   }

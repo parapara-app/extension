@@ -1,6 +1,9 @@
 import { registerContextMenus } from "@/background/contextMenu";
 import { handleFullPageTranslate } from "@/background/translate/onClick";
-import { registerPageTranslateMenu, tabTranslateState } from "@/background/translate/registerMenu";
+import {
+  registerPageTranslateMenu,
+  tabTranslateState,
+} from "@/background/translate/registerMenu";
 
 chrome.runtime.onInstalled.addListener(() => {
   registerContextMenus();
@@ -23,18 +26,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "RESULT_PAGE_TEXT") {
     console.log("[RESULT_PAGE_TEXT] ", message.text);
 
-    // 번역 처리 
-    const translated = `${message.text}`;
+    // 번역 처리
+    const replaced = Array.isArray(message.text)
+      ? message.text.map(() => "■■■■■■")
+      : [];
 
-    // content script로 다시 결과 전달
-    // if (sender.tab && sender.tab.id) {
-    //   chrome.tabs.sendMessage(sender.tab.id, {
-    //     type: "REPLACE_PAGE_TEXT",
-    //     text: translated,
-    //   });
-    // }
+    if (sender.tab && sender.tab.id) {
+      console.log("sender.tab: ", sender.tab.id);
+      chrome.tabs.sendMessage(sender.tab.id, {
+        type: "REPLACE_PAGE_TEXT",
+        replacedTexts: replaced,
+      });
+    } else if (message.tabId) {
+      console.log("message.tabId: ", message.tabId);
+      // 혹시 tabId를 넘겼으면 이걸로
+      chrome.tabs.sendMessage(message.tabId, {
+        type: "REPLACE_PAGE_TEXT",
+        replacedTexts: replaced,
+      });
+    }
   }
-
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {

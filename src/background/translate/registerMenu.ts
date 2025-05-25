@@ -29,6 +29,4 @@ export const registerPageTranslateMenu = (tabId: number, isTranslated: boolean) 
       tabTranslateState.set(tabId, isTranslated ? "translated" : "original");
     }
   );
-
-  console.log("[tabTranslationState] :", tabTranslateState);
 };
